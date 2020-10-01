@@ -9,23 +9,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import hh.swd20.bookstore.domain.Book;
 import hh.swd20.bookstore.domain.BookRepository;
+import hh.swd20.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
+	// inject repositories
 	@Autowired
-	private BookRepository repository;
+	private BookRepository brepository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 	
 	// list all books
 	@RequestMapping("/booklist")
 	public String bookList(Model model) {
-		model.addAttribute("books", repository.findAll());
+		model.addAttribute("books", brepository.findAll());
 		return "booklist";
 	}
 	
 	// delete book
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
-		repository.deleteById(bookId);
+		brepository.deleteById(bookId);
 		return "redirect:../booklist";
 	}
 	
@@ -33,13 +38,14 @@ public class BookController {
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 	}
 
 	// save book
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Book book) {
-		repository.save(book);
+		brepository.save(book);
 		return "redirect:booklist";	
 	}
 

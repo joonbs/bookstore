@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 
 import hh.swd20.bookstore.domain.Book;
 import hh.swd20.bookstore.domain.BookRepository;
+import hh.swd20.bookstore.domain.Category;
+import hh.swd20.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -20,19 +22,19 @@ public class BookstoreApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner demo(BookRepository repository) {
+	public CommandLineRunner demo(BookRepository brepository, CategoryRepository crepository) {
 		return (args) -> {
-			log.info("Save some book data");
-			Book b1 = new Book("Kirja1", "Kirjailija1", 2015, "isbn100");
-			Book b2 = new Book("Kirja2", "Kirjailija2", 1990, "isbn200");
-			Book b3 = new Book("Kirja3", "Kirjailija3", 1960, "isbn300");
+			log.info("Saving some book data...");
+			crepository.save(new Category("Science"));
+			crepository.save(new Category("History"));
+			crepository.save(new Category("Fantasy"));
 			
-			repository.save(b1);
-			repository.save(b2);
-			repository.save(b3);	
+			brepository.save(new Book("Kirja1", "Kirjailija1", 1960, "ISBN-1000", 15.00, crepository.findByName("Science").get(0)));
+			brepository.save(new Book("Kirja2", "Kirjailija2", 2000, "ISBN-2000", 25.00, crepository.findByName("History").get(0)));
+			brepository.save(new Book("Kirja3", "Kirjailija3", 2018, "ISBN-3000", 19.80, crepository.findByName("Fantasy").get(0)));
 			
 			log.info("fetch all books");
-			for (Book book : repository.findAll()) {
+			for (Book book : brepository.findAll()) {
 				log.info(book.toString());
 			}
 			

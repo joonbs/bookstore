@@ -4,31 +4,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	// attribuutit
+	// attributes
 	public Long id;
 	private String title;
 	private String author;
 	private int year;
 	private String isbn;
+	private double price;
 	
-	// konstruktori ilman attribuutteja
+	// relationships & Category constructor
+	@ManyToOne
+	@JoinColumn(name = "categoryId")
+	private Category category;
+	
+	// constructor without attributes
 	public Book() {}
 	
-	// konstruktorit
-	public Book(String title, String author, int year, String isbn) {
+	// constructors
+	public Book(String title, String author, int year, String isbn, double price, Category category) {
 		super();
 		this.title = title;
 		this.author = author;
 		this.year = year;
 		this.isbn = isbn;
+		this.price = price;
+		this.category = category;
 	}
 	
-	// getterit ja setterit
+	// getters and setters
 	public String getTitle() {
 		return title;
 	}
@@ -53,11 +63,22 @@ public class Book {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
-	// toString -metodi
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	// toString method
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + "]";
+		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
 	}
 	
 }
