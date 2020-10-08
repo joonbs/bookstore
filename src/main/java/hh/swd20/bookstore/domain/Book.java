@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Book {
 	@Id
@@ -21,6 +23,8 @@ public class Book {
 	
 	// relationships & Category constructor
 	@ManyToOne
+	// @JsonIgnoreProperties - one way to avoid infinite loop during JSON serialization/deserialization with bidirectional relationships
+	@JsonIgnoreProperties("categories")
 	@JoinColumn(name = "categoryId")
 	private Category category;
 	
@@ -78,7 +82,7 @@ public class Book {
 	// toString method
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
+		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + ", category =" + this.getCategory() + "]";
 	}
 	
 }
