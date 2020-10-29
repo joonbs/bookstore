@@ -31,6 +31,7 @@ public class Book {
 	// constructor without attributes
 	public Book() {}
 	
+	// to-do: check if id works, remove if errors
 	// constructors
 	public Book(String title, String author, int year, String isbn, double price, Category category) {
 		super();
@@ -42,7 +43,14 @@ public class Book {
 		this.category = category;
 	}
 	
+	// to-do: check if id works, remove if errors
 	// getters and setters
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -79,10 +87,11 @@ public class Book {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	// to-do: check id functionality and add if statement (check student demo example)
 	// toString method
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + ", category =" + this.getCategory() + "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + ", category =" + this.getCategory() + "]";
 	}
 	
 }
